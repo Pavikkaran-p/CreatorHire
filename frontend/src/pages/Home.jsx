@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import JobCard from '../components/JobCard'
-import { useDispatch,useSelector } from "@reduxjs/toolkit";
+// import { useDispatch,useSelector } from "@reduxjs/toolkit";
 const Home = () => {
-    const dispatch = useDispatch()
-    const jobs = useSelector(state => state.jobData.jobs);
+    // const dispatch = useDispatch()
+    // const jobs = useSelector(state => state.jobData.jobs);
 
-    useEffect(() => {
     const data = [
         {
             id: 3,
@@ -118,10 +117,11 @@ const Home = () => {
             tags: ["Project Management", "Team Leadership", "Budget Management"]
         }
     ];
-    dispatch(getAllJobs(data));
-    }, [dispatch]);
+//     useEffect(() => {
+//     // dispatch(getAllJobs(data));
+// }, []);
+console.log(data)
   
-  console.log(data)
   return (
     <>
     <div className='flex gap-10 justify-center flex-wrap items-center py-10'>
