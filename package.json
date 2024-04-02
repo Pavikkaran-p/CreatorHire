@@ -1,0 +1,18 @@
+{
+  "name": "createrhire",
+  "version": "0.0.1",
+  "description": "The CreatorHire is a single destination for creators to find perfect job and businesses to hire top-tier talent. Join us and experience a new standard in the world of creative hiring.",
+  "main": "main.jsx",
+  "scripts": {
+    "start-fr":"cd frontend && npm run dev",
+    "start-b":"cd backend && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Job",
+    "creator",
+    "business"
+  ],
+  "author": "Pavikkaran",
+  "license": "ISC"
+}
