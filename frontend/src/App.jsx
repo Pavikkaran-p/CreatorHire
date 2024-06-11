@@ -11,6 +11,7 @@ const App = () => {
       <Route path='/jobs' element={<Home/>}/>
       <Route path='/jobs/:id' element={<JobDetails/>}/>
     </Routes>
+    
   )
 }
 

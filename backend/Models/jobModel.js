@@ -10,8 +10,8 @@ const jobSchema = new mongoose.Schema({
     responsibilities: { type: [String], required: true },
     companyTechStack: { type: [String], required: true },
     foundedIn: { type: Number, required: true },
-    employeeCount: { type: Number, required: true },
-    jobTags: { type: [String], required: true }
+    employeeCount: { type: Number},
+    jobTags: { type: [String] }
 });
 
 const Job = mongoose.model('Job', jobSchema);
