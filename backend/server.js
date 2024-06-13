@@ -23,7 +23,10 @@ db.on('open',()=>{
 })
 connectDB();
 
-
+app.get('/',(req,res)=>{
+    console.log("Backend Working fine")
+    res.send(200)
+})
 app.use('/auth',authRoute)
 app.use('/api/jobs',jobrouter)
 
