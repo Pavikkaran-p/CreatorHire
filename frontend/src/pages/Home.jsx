@@ -1,28 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import JobCard from '../components/JobCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchJobs, getAllJobs } from '../redux/dataSlice';
 
 const Home = () => {
-    const jobs = useSelector(getAllJobs);
-    const dispatch = useDispatch();
+    const [jobData, setJobData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        dispatch(fetchJobs()); // Dispatch the fetchJobs action to fetch data when the component mounts
-    }, [dispatch]);
+        const fetchData = async () => {
+            try {
+                const response = await fetch('api/jobs/getAllJobs');
+                const data = await response.json();
+                setJobData(data);
+                // if (data.length!=0) {
+                // } else {
+                //     throw new Error('Data format is incorrect');
+                // }
+            } catch (error) {
+                console.log(error)
+                setError('Error fetching data');
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    if (!Array.isArray(jobs)) {
-        return <div>Loading...</div>; // Or any other loading indicator
+        fetchData();
+    }, []);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
     }
 
     return (
-        <>
-            <div className='flex gap-10 justify-center flex-wrap items-center py-10'>
-                {jobs.map((job) => (
-                    <JobCard key={job.id} data={job} />
-                ))}
-            </div>
-        </>
+        <div className='flex gap-10 justify-center flex-wrap items-center py-10'>
+            {jobData.length==0?<h1>No data found</h1> : jobData.map((job) => (
+                <JobCard key={job._id} data={job} />
+            ))}
+        </div>
     );
 };
 

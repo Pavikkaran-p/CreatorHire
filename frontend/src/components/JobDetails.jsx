@@ -1,7 +1,8 @@
+import { useParams } from "react-router-dom";
+
 const JobDetails = () => {
     const { id } = useParams();
-    const job = jobData.find(job => job.id === parseInt(id));
-
+    
     if (!job) {
         return <div>Job not found</div>;
     }
