@@ -12,11 +12,9 @@ const JobDetails = () => {
         const fetchJobDetails = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`/api/jobs/getjob/${id}`, 
-                // {
-                //     headers: { Authorization: `Bearer ${token}` }
-                // }
-            );
+                const response = await axios.get(`/api/jobs/getjob/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
                 setJob(response.data);
             } catch (err) {
                 setError('Failed to fetch job details.');
@@ -28,42 +26,69 @@ const JobDetails = () => {
     }, [id]);
 
     if (isLoading) {
-        return <div className='mx-[50%] p-10 font-bold'><h1>
-            Loading...
-        </h1></div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <h1 className="text-xl font-bold">Loading...</h1>
+            </div>
+        );
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <h1 className="text-xl text-red-500">{error}</h1>
+            </div>
+        );
     }
 
     if (!job) {
-        return <div>Job not found</div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <h1 className="text-xl text-gray-500">Job not found</h1>
+            </div>
+        );
     }
 
     return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
-            <div className="bg-white rounded-lg shadow p-6 w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-4">Job Details</h2>
-                <p className="text-gray-600 mb-4">Job ID: {id}</p>
-                <div className="border-t border-gray-200 mt-4 pt-4">
-                    <p className="text-lg font-semibold">Company Name</p>
-                    <p className="text-gray-600">{job.company}</p>
+        <div className="flex justify-center items-center h-screen bg-gray-100 p-4">
+            <div className="bg-white rounded-lg shadow p-6 w-full max-w-2xl">
+                <h2 className="text-3xl font-bold mb-6">Job Details</h2>
+                <div className="border-b border-gray-200 pb-4 mb-4">
+                    <h3 className="text-lg font-semibold">Company Name</h3>
+                    <p className="text-gray-600">{job.companyName}</p>
                 </div>
-                <div className="border-t border-gray-200 mt-4 pt-4">
-                    <p className="text-lg font-semibold">Location</p>
+                <div className="border-b border-gray-200 pb-4 mb-4">
+                    <h3 className="text-lg font-semibold">Location</h3>
                     <p className="text-gray-600">{job.location}</p>
                 </div>
-                <div className="border-t border-gray-200 mt-4 pt-4">
-                    <p className="text-lg font-semibold">Description</p>
+                <div className="border-b border-gray-200 pb-4 mb-4">
+                    <h3 className="text-lg font-semibold">Description</h3>
                     <p className="text-gray-600">{job.description}</p>
                 </div>
-                <div className="border-t border-gray-200 mt-4 pt-4">
-                    <p className="text-lg font-semibold">Requirements</p>
+                <div className="border-b border-gray-200 pb-4 mb-4">
+                    <h3 className="text-lg font-semibold">Requirements</h3>
                     <div className="flex flex-wrap">
-                        {job?.requirements?.map((requirement, index) => (
-                            <span key={index} className="bg-blue-200 text-blue-800 rounded-full px-2 py-1 text-sm mr-2 mb-2">
+                        {job.skillsNeeded.map((requirement, index) => (
+                            <span key={index} className="bg-blue-200 text-blue-800 rounded-full px-3 py-1 text-sm mr-2 mb-2">
                                 {requirement}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+                <div className="border-b border-gray-200 pb-4 mb-4">
+                    <h3 className="text-lg font-semibold">Responsibilities</h3>
+                    <ul className="list-disc pl-5 text-gray-600">
+                        {job.responsibilities.map((responsibility, index) => (
+                            <li key={index}>{responsibility}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="border-b border-gray-200 pb-4 mb-4">
+                    <h3 className="text-lg font-semibold">Company Tech Stack</h3>
+                    <div className="flex flex-wrap">
+                        {job.companyTechStack.map((tech, index) => (
+                            <span key={index} className="bg-green-200 text-green-800 rounded-full px-3 py-1 text-sm mr-2 mb-2">
+                                {tech}
                             </span>
                         ))}
                     </div>
