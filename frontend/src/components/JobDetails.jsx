@@ -1,8 +1,42 @@
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const JobDetails = () => {
     const { id } = useParams();
-    
+    const [job, setJob] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchJobDetails = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`/api/jobs/getjob/${id}`, 
+                // {
+                //     headers: { Authorization: `Bearer ${token}` }
+                // }
+            );
+                setJob(response.data);
+            } catch (err) {
+                setError('Failed to fetch job details.');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchJobDetails();
+    }, [id]);
+
+    if (isLoading) {
+        return <div className='mx-[50%] p-10 font-bold'><h1>
+            Loading...
+        </h1></div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+
     if (!job) {
         return <div>Job not found</div>;
     }
@@ -14,7 +48,7 @@ const JobDetails = () => {
                 <p className="text-gray-600 mb-4">Job ID: {id}</p>
                 <div className="border-t border-gray-200 mt-4 pt-4">
                     <p className="text-lg font-semibold">Company Name</p>
-                    <p className="text-gray-600">{job.companyName}</p>
+                    <p className="text-gray-600">{job.company}</p>
                 </div>
                 <div className="border-t border-gray-200 mt-4 pt-4">
                     <p className="text-lg font-semibold">Location</p>
@@ -25,10 +59,12 @@ const JobDetails = () => {
                     <p className="text-gray-600">{job.description}</p>
                 </div>
                 <div className="border-t border-gray-200 mt-4 pt-4">
-                    <p className="text-lg font-semibold">Tags</p>
+                    <p className="text-lg font-semibold">Requirements</p>
                     <div className="flex flex-wrap">
-                        {job.tags.map((tag, index) => (
-                            <span key={index} className="bg-blue-200 text-blue-800 rounded-full px-2 py-1 text-sm mr-2 mb-2">{tag}</span>
+                        {job?.requirements?.map((requirement, index) => (
+                            <span key={index} className="bg-blue-200 text-blue-800 rounded-full px-2 py-1 text-sm mr-2 mb-2">
+                                {requirement}
+                            </span>
                         ))}
                     </div>
                 </div>

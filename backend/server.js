@@ -1,35 +1,34 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from 'dotenv'
 import authRoute from "./routes/authRoute.js";
+import connectDB from "./Database/db.js";
+import jobrouter from "./routes/jobRoute.js";
+import hrrouter from "./routes/hrRoutes.js";
+dotenv.config()
+
 const app=express();
 app.use(express.json());
 app.use(cors());
 
-import dotenv from 'dotenv'
-import connectDB from "./Database/db.js";
-import jobrouter from "./routes/jobRoute.js";
-dotenv.config()
 const port=process.env.PORT || 5500
 
-app.get('/',(req,res)=>{
-    console.log("Req received")
-    res.send('Hello test')
-})
 
-const db=mongoose.connection
-db.on('open',()=>{
-    console.log("Connected to mongoDB")
-})
-connectDB();
+app.use('/api/auth',authRoute)
+app.use('/api/jobs',jobrouter)
+app.use('/api/hr',hrrouter);
+
 
 app.get('/',(req,res)=>{
     console.log("Backend Working fine")
     res.send(200)
 })
-app.use('/auth',authRoute)
-app.use('/api/jobs',jobrouter)
-
+const db=mongoose.connection
+db.on('open',()=>{
+    console.log("Connected to mongoDB")
+})
+connectDB();
 app.listen(port,()=>{
     console.log(`App running in port ${port}`)
 })

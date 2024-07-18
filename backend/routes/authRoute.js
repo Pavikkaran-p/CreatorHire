@@ -1,10 +1,11 @@
 import express from 'express';
-import { loginUser, registerUser } from '../Controllers/authController.js';
-import { getAllJobs } from '../Controllers/jobController.js';
+import { loginHR, loginUser, registerHR, registerUser } from '../Controllers/authController.js';
 
 const router = express.Router();
 
-router.post('/register', registerUser);
-router.post('/login', loginUser);
+router.post('/user/register', registerUser);
+router.post('/hr/register', registerHR);
+router.post('/user/login', loginUser);
+router.post('/hr/login', loginHR);
 
 export default router;

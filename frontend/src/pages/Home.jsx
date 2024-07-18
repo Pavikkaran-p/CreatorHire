@@ -17,7 +17,7 @@ const Home = () => {
                 //     throw new Error('Data format is incorrect');
                 // }
             } catch (error) {
-                console.log(error)
+                // console.log(error)
                 setError('Error fetching data');
             } finally {
                 setIsLoading(false);
