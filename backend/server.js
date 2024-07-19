@@ -1,11 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from 'dotenv'
 import authRoute from "./routes/authRoute.js";
 import connectDB from "./Database/db.js";
 import jobrouter from "./routes/jobRoute.js";
 import hrrouter from "./routes/hrRoutes.js";
+import dotenv from 'dotenv'
 dotenv.config()
 
 const app=express();
