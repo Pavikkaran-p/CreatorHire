@@ -9,14 +9,21 @@ import RegisterHr from './components/auth/RegisterHr'
 import RegisterUser from './components/auth/RegisterUser'
 import ProfileUpdateForm from './components/ProfileUpdateForm'
 import About from './pages/About'
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LandingPage from './pages/Landing'
+import PostJob from './components/PostJob'
+import Profile from './components/Profile'
 
 const App = () => {
   return (
     <>
       <Header/>
       <Routes>
-        <Route path='/' element={<Home/>}/>
+        <Route path='/jobs' element={<Home/>}/>
+        <Route path='/postjob' element={<PostJob/>}/>
+        <Route path='/' element={<LandingPage/>}/>
+        <Route path='/profile' element={<Profile/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/jobs/:id' element={<JobDetails/>}/>
         <Route path='/loginhr' element={<LoginHr/>}/>
@@ -25,7 +32,7 @@ const App = () => {
         <Route path='/registeruser' element={<RegisterUser/> }/>
         <Route path='/updateprofile' element={<ProfileUpdateForm/>}/>
       </Routes>
-    
+      <ToastContainer autoClose={1200} />
     </>
   )
 }

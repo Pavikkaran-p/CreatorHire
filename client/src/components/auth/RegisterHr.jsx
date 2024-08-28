@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from 'react-router-dom';
 
-const RegisterUser = () => {
+
+const RegisterHr = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -20,7 +18,7 @@ const RegisterUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/auth/user/register', formData);
+            const response = await axios.post('/api/auth/hr/register', formData);
             console.log('Registration successful:', response.data);
             toast.success('Registration successful! Please log in.');
             navigate('/loginuser');
@@ -33,7 +31,7 @@ const RegisterUser = () => {
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Register User</h2>
+                <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Recruter Register</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-gray-700 text-sm font-medium mb-1">Name</label>
@@ -81,10 +79,13 @@ const RegisterUser = () => {
                         Register
                     </button>
                 </form>
+                <div className="mt-6 text-center">
+                    <p className="text-gray-700">Already have an account <Link to="/loginhr" className="text-blue-600 hover:text-blue-700 font-semibold">Login</Link></p>
+                </div>
             </div>
-            <ToastContainer />
+            
         </div>
     );
 };
 
-export default RegisterUser;
+export default RegisterHr;

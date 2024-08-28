@@ -10,9 +10,9 @@ services:
     volumes:
       - mongodb_data:/data/db
 
-  backend:
-    build: ./backend
-    container_name: backend
+  server:
+    build: ./server
+    container_name: server
     ports:
       - "3001:3001"
     depends_on:
@@ -20,13 +20,13 @@ services:
     environment:
       - MONGODB_URI=$
 
-  frontend:
-    build: ./frontend
-    container_name: frontend
+  client:
+    build: ./client
+    container_name: client
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      - server
 
 volumes:
   mongodb_data:

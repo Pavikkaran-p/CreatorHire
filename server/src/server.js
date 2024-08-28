@@ -5,12 +5,23 @@ import authRoute from "./routes/authRoute.js";
 import connectDB from "./Database/db.js";
 import jobrouter from "./routes/jobRoute.js";
 import hrrouter from "./routes/hrRoutes.js";
+import { rateLimit } from 'express-rate-limit'
+
+
 import dotenv from 'dotenv'
 dotenv.config()
 
 const app=express();
 app.use(express.json());
 app.use(cors());
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, 
+	limit: 100, 
+	standardHeaders: 'draft-7',
+	legacyHeaders: false, 
+})
+app.use(limiter)
 
 const port=process.env.PORT || 5500
 

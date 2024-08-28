@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import shortid from 'shortid';
 
 const jobSchema = new mongoose.Schema({
-    jobId: { type: String, default: shortid.generate, unique: true, maxlength: 6 },
+    jobId: { type: String, default: shortid.generate, unique: true },
     title: { type: String, required: true },
     jobDescription: { type: String, required: true },
     skillsNeeded: { type: [String], required: true },

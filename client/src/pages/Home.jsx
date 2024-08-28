@@ -32,11 +32,14 @@ const Home = () => {
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div>
+            <h1>Something went wrong</h1>
+        </div>;
     }
 
     return (
-        <div className='flex gap-10 justify-center flex-wrap items-center py-10'>
+        // <div className='flex gap-10 justify-center flex-wrap items-center py-10'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center'>
             {jobData.length==0?<h1>No data found</h1> : jobData.map((job) => (
                 <JobCard key={job._id} data={job} />
             ))}
