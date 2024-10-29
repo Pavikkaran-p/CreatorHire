@@ -2,6 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const path=window.location.pathname
+  if(path.startsWith('/login' || path.startsWith('/register'))) return <></>;
+    
+// loginuser
+// registerhr
+// registeruser
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   console.log(token);

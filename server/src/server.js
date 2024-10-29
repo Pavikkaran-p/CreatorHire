@@ -1,19 +1,20 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from 'dotenv'
 import cors from "cors";
 import authRoute from "./routes/authRoute.js";
 import connectDB from "./Database/db.js";
 import jobrouter from "./routes/jobRoute.js";
 import hrrouter from "./routes/hrRoutes.js";
 import { rateLimit } from 'express-rate-limit'
+import cookieParser from "cookie-parser";
 
-
-import dotenv from 'dotenv'
 dotenv.config()
 
 const app=express();
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, 

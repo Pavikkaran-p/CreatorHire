@@ -9,7 +9,6 @@ export const registerUser = async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const existingUser = await User.findOne({ email });
-        console.log(existingUser)
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
@@ -41,11 +40,14 @@ export const loginUser = async (req, res) => {
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+        res.cookie('authtoken', token, {
+            httpOnly: true, 
+            secure: true 
+            // httpOnly: true,
+            // secure: process.env.NODE_ENV === 'production',
+            // sameSite: 'strict',
+            
+            // maxAge: 30 * 24 * 60 * 60 * 1000,
         });
 
         res.status(200).json({ message: 'Login successful',token:token });
@@ -101,18 +103,18 @@ export const loginHR = async (req, res) => {
     }
 };
 
-export const verifyToken = async (req, res, next) => {
+export const verifyToken = async (req, res) => {
     try {
-        // const token = req.cookie.token;
-        // console.log(token)
+        const token = req.cookies.authtoken;
         
-        // if (!token) {
-        //     return res.status(401).json({ message: 'No token provided, authorization denied' });
-        // }
-        // jwt.verify(token, process.env.JWT_SECRET);
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided, authorization denied' });
+        }
+        jwt.verify(token, process.env.JWT_SECRET);
 
         return res.status(200).json({ valid: true });
     } catch (error) {
+        console.log(error)
         return res.status(401).json({ message: 'Invalid or expired token' });
     }
 };
